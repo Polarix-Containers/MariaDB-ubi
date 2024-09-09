@@ -30,6 +30,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get version
+        run: |
+          echo "FULL_VERSION=lts >> $GITHUB_ENV
+
       # Add support for more platforms with QEMU (optional)
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
@@ -58,7 +62,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: lts
+          context: ${{ env.FULL_VERSION }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -86,7 +90,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
-          category: trivy-lts
+          category: trivy-${{ env.FULL_VERSION }}
 
   grype:
     name: Scan current image with Grype
@@ -107,4 +111,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
-          category: grype-lts
+          category: grype-${{ env.FULL_VERSION }}
