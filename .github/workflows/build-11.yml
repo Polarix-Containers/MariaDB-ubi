@@ -32,7 +32,7 @@ jobs:
 
       - name: Get version
         run: |
-          echo "FULL_VERSION=11 >> $GITHUB_ENV
+          echo "FULL_VERSION=11" >> $GITHUB_ENV
 
       # Add support for more platforms with QEMU (optional)
       # https://github.com/docker/setup-qemu-action
