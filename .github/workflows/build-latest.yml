@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-11.yml'
-      - '11/**'
+      - '.github/workflows/build-latest.yml'
+      - 'latest/**'
   schedule:
     # Build the image daily
     - cron: '15 0 * * *'
