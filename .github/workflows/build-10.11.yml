@@ -53,6 +53,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             ${{ env.TAG }}-ubi
+            10-ubi
 
       - name: Build and push Docker image
         id: build-and-push
