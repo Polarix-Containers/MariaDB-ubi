@@ -15,7 +15,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: polarix-containers/mariadb
-  TAG: ubi-lts
+  TAG: lts
 
 jobs:
   build:
@@ -29,10 +29,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Get version
-        run: |
-          echo "FULL_VERSION=lts" >> $GITHUB_ENV
 
       # Add support for more platforms with QEMU (optional)
       # https://github.com/docker/setup-qemu-action
@@ -56,13 +52,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            ${{ env.TAG }}
+            ubi-${{ env.TAG }}
 
       - name: Build and push Docker image
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: ${{ env.FULL_VERSION }}
+          context: ${{ env.TAG }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
@@ -90,7 +86,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trivy-results.sarif
-          category: trivy-lts
+          category: trivy-${{ env.TAG }}
 
   grype:
     name: Scan current image with Grype
@@ -111,4 +107,4 @@ jobs:
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.grype.outputs.sarif }}
-          category: grype-lts
+          category: grype-${{ env.TAG }}
