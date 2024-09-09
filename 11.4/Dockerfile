@@ -1,4 +1,4 @@
-ARG VERSION=lts
+ARG VERSION=11.4
 
 FROM mariadb:${VERSION}-ubi
 

@@ -1,4 +1,4 @@
-ARG VERSION=10
+ARG VERSION=10.11
 
 FROM mariadb:${VERSION}-ubi
 

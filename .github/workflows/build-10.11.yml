@@ -1,4 +1,4 @@
-name: Build UBI LTS
+name: Build UBI 10.11
 
 on:
   workflow_dispatch:
@@ -6,8 +6,8 @@ on:
     branches:
       - main
     paths:
-      - '.github/workflows/build-lts.yml'
-      - 'lts/**'
+      - '.github/workflows/build-10.11.yml'
+      - '10.11/**'
   schedule:
     # Build the image daily
     - cron: '15 0 * * *'
@@ -15,7 +15,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: polarix-containers/mariadb
-  TAG: lts
+  TAG: 10.11
 
 jobs:
   build:
