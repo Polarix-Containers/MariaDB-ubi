@@ -1,4 +1,4 @@
-name: Build 11
+name: Build UBI
 
 on:
   workflow_dispatch:

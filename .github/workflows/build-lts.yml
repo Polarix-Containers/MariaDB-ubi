@@ -1,4 +1,4 @@
-name: Build LTS
+name: Build UBI LTS
 
 on:
   workflow_dispatch:
