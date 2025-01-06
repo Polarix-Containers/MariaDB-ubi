@@ -14,8 +14,8 @@ USER root
 RUN --network=none \
     usermod -u ${UID} mysql \
     && groupmod -g ${GID} mysql \
-    && find / -user 999 -exec chown -h mysql {} \; \
-    && find / -group 999 -exec chgrp -h mysql {} \;
+    && find / -path '/proc' -prune -user 999 -exec chown -h mysql {} \; \
+    && find / -path '/proc' -prune -group 999 -exec chgrp -h mysql {} \;
 
 RUN microdnf -y upgrade \
     && rm -rf /usr/local/bin/gosu \
