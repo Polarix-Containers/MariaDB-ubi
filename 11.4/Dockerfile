@@ -1,10 +1,21 @@
 ARG VERSION=11.4
+ARG UID=200011
+ARG GID=200011
 
 FROM mariadb:${VERSION}-ubi
+
+ARG UID
+ARG GID
 
 LABEL maintainer="Thien Tran contact@tommytran.io"
 
 USER root
+
+RUN --network=none \
+    usermod -u ${UID} mysql \
+    && groupmod -g ${GID} mysql \
+    && find / -user 999 -exec chown -h mysql {} \; \
+    && find / -group 999 -exec chgrp -h mysql {} \;
 
 RUN microdnf -y upgrade \
     && rm -rf /usr/local/bin/gosu \
